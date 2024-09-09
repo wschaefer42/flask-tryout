@@ -1,0 +1,5 @@
+Hello {{ name }}
+
+Welcome to {{ site }}. Open the App by clicking on Link {{ link }}
+
+Your Flasky Team

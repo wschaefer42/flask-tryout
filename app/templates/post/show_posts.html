@@ -1,0 +1,16 @@
+{% extends "bootstrap_base.html" %}
+{% block title %}Flasky - {{ user.username }}{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ pagedown.include_pagedown() }}
+{% endblock %}
+
+{% block content %}
+    <div>
+        {% if current_user.can(Permission.WRITE) %}
+            {{ render_form(form) }}
+        {% endif %}
+    </div>
+    {% include 'post/_list_posts.html' %}
+{% endblock %}

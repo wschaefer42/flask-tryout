@@ -1,0 +1,32 @@
+{% extends 'bootstrap_base.html' %}
+
+{% macro post_tab(filter, label) %}
+    <li class="nav-item">
+        <a class="nav-link {% if show_followed == filter.value %}active{% endif %}"
+           href="{{ url_for('main.show_posts', tab=filter.value) }}">{{ label }}
+        </a>
+    </li>
+{% endmacro %}
+
+{% block content %}
+ <div class="page-header">
+    {% if current_user.is_authenticated %}
+        <h1>Hello, {{current_user.username}}!</h1>
+    {% else %}
+        <h1>Hello, Stranger!</h1>
+    {% endif %}
+    <hr>
+    <h2>Other posts!</h2>
+    <div class="post-tabs">
+        <ul class="nav nav-tabs">
+            {{ post_tab(types.PostFilter.ALL, 'All') }}
+            {% if current_user.is_authenticated %}
+                {{ post_tab(types.PostFilter.MYSELF, 'Myself') }}
+                {{ post_tab(types.PostFilter.FOLLOWED, 'Followed') }}
+            {% endif %}
+        </ul>
+        {% include 'post/_list_posts.html' %}
+    </div>
+</div>
+
+{% endblock %}

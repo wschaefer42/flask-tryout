@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GBrowserProjectService"><![CDATA[{
+  "tabs": [
+    {
+      "url": "http://localhost:5003/hello/index?name=Werner",
+      "name": "- FlaskApp",
+      "createdAt": "2024-07-03T10:37:43Z"
+    }
+  ]
+}]]></component>
+</project>

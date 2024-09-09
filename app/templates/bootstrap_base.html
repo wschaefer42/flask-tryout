@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% block head %}
+        {{ moment.include_moment() }}
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        {% block styles %}
+            {{ bootstrap.load_css() }}
+            <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+            <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+        {% endblock %}
+
+        {% block scripts %}
+            {{ bootstrap.load_js() }}
+        {% endblock %}
+
+        <title>Flasky</title>
+    {% endblock %}
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #b9c0f0;">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="{{ url_for('main.index') }}">
+                <img src="{{ url_for('static', filename='varianceicon.svg') }}" alt="" height="30" width="41" class="d-inline-block" style="position: relative;top: -2px;">
+                Flasky
+            </a>
+                <div class="justify-content-start flex-grow-0">
+                    {% if current_user.is_administrator() %}
+                        <img src="{{ url_for('static', filename='admin.png') }}" alt="" height="25" width="25">
+                    {% endif %}
+                    {{ current_user.username }}
+                </div>
+            <div class="flex-grow-1">
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggle">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+                <ul class="navbar-nav me-auto me-1 mb-lg-0">
+                    <li class="nav-item active"><a class="nav-link" href="{{ url_for('main.index') }}">Home</a></li>
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('profile.list_profiles') }}">Profiles</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('post.show_posts') }}">Posts</a></li>
+                        {% if current_user.can(Permission.MODERATE) %}
+                            <li><a class="nav-link" href="{{ url_for('main.for_moderators_only') }}">Moderate</a></li>
+                        {% endif %}
+                    {% endif %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarSettings" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Settings
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('auth.account') }}">Account</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container">
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <button type="button" class="btn-close" aria-label="Close"></button>
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Your page content -->
+<div class="container">
+    {% from 'bootstrap5/form.html' import render_form, render_field %}
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+</html>

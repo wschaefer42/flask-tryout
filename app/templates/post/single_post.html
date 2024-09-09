@@ -1,0 +1,15 @@
+{% extends "bootstrap_base.html" %}
+
+{% block title %}Flasky - Post{% endblock %}
+
+{% block content %}
+{% include 'post/_list_posts.html' %}
+
+<h4 id="comments">Comments</h4>
+{% if current_user.can(Permission.COMMENT) %}
+    <div class="comment-form">
+        {{ render_form(form) }}
+    </div>
+{% endif %}
+{% include 'post/_list_comments.html' %}
+{% endblock %}

@@ -1,0 +1,12 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+entity User
+entity Role
+entity Post
+entity Follow
+User ||--o{ Post
+User ||--{ Role
+User ||--o{ Follow : follower
+Follow ||-|{ User : followed
+@enduml

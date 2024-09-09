@@ -1,0 +1,25 @@
+{% extends "bootstrap_base.html" %}
+
+{% block title %}Flasky - {{ title }} {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ title }} {{ user.username }}</h1>
+</div>
+<table class="table table-hover followers">
+    <thead><tr><th>User</th><th>Since</th></tr></thead>
+    {% for follow in followers %}
+    {% if not user.username == follow.user.username %}
+    <tr>
+        <td>
+            <a href="{{ url_for('profile.show_profile', username = follow.user.username) }}">
+                <img class="img-rounded" src="{{ follow.user.gravatar_icon(size=32) }}">
+                {{ follow.user.username }}
+            </a>
+        </td>
+        <td>{{ moment(follow.timestamp).format('L') }}</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+</table>
+{% endblock %}
