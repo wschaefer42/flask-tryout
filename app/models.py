@@ -1,12 +1,12 @@
 import enum
 import hashlib
 from datetime import datetime, timedelta
-
 import jwt
 from flask import current_app, url_for
 from flask_login import UserMixin
 from slugify import slugify
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy.orm import Mapped, mapped_column
 from . import db, login_manager, config, moment, utils
 
 
